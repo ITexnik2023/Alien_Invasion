@@ -14,6 +14,7 @@ def run_game():
 
     while True:
         fn.check(ship)
+        ship.update()
         fn.update_screen(ai_settings, screen, ship)
 
 
