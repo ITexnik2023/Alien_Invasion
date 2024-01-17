@@ -9,10 +9,10 @@ class Ship:
         self.image = pygame.transform.scale(self.image,(100,100))
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
-        self.rect.centery = self.screen_rect.centery
+        self.rect.y = self.screen_rect.centery
         self.rect.centerx = self.screen_rect.centerx
         self.centerx = float(self.rect.centerx)
-        self.centery = float(self.rect.centery)
+        self.y = float(self.rect.y)
         self.rect.bottom = self.screen_rect.bottom
         self.moving_right = False
         self.moving_left = False
@@ -25,12 +25,12 @@ class Ship:
         if self.moving_left and self.rect.left > 0:
             self.centerx -= self.ai_settings.ship_speed_factor
         if self.moving_up:
-            self.centery -= self.ai_settings.ship_speed_factor
+            self.y -= self.ai_settings.ship_speed_factor
         if self.moving_down:
-            self.centery += self.ai_settings.ship_speed_factor
+            self.y += self.ai_settings.ship_speed_factor
 
         self.rect.centerx = self.centerx
-        self.rect.centery = self.centery
+        self.rect.y = self.y
 
 
     def blitme(self):
