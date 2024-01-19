@@ -17,10 +17,7 @@ def run_game():
     while True:
         fn.check(ship, ai_settings, bullets, screen)
         ship.update()
-        bullets.update()
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)
+        fn.update_bullets(bullets)
         fn.update_screen(ship, ai_settings,bullets, screen)
 
 

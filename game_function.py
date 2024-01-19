@@ -8,14 +8,13 @@ def check(ship, ai_settings, bullets,screen):
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(ship, event)
-            bullet_strike(event, ai_settings, bullets, ship, screen)
+            check_keydown_events(ship, event,ai_settings,screen,bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(ship, event)
 
         #обработчик нажатия стрелки
 
-def check_keydown_events(ship, event):
+def check_keydown_events(ship, event,ai_settings,screen,bullets):
         if event.key == pygame.K_RIGHT:
             ship.moving_right = True
         if event.key == pygame.K_LEFT:
@@ -24,16 +23,21 @@ def check_keydown_events(ship, event):
             ship.moving_up = True
         if event.key == pygame.K_DOWN:
             ship.moving_down = True
-def bullet_strike(event,ai_settings,bullets,ship,screen):
-        if len(bullets) != ai_settings.bullet_count:
-            if event.key == pygame.K_SPACE:
-                new_bullet = Bullet(ai_settings,ship, screen)
-                bullets.add(new_bullet)
-        else:
-            pygame.time.wait(ai_settings.bullet_recharge)
+        if event.key == pygame.K_SPACE:
+            fire_bullet(bullets,ai_settings,ship,screen)
 
 
 
+
+def fire_bullet(bullets,ai_settings,ship,screen):
+    if len(bullets) <= ai_settings.bullet_allowed:
+        new_bullet = Bullet(ai_settings, ship, screen)
+        bullets.add(new_bullet)
+def update_bullets(bullets):
+    bullets.update()
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
 def check_keyup_events(ship, event):
         if event.key == pygame.K_LEFT:
             ship.moving_left = False
