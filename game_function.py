@@ -50,10 +50,11 @@ def check_keyup_events(ship, event):
 
 
 
-def update_screen(ship, ai_settings, bullets, screen):
+def update_screen(ship, ai_settings, bullets, screen,alien):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
 
     ship.blitme()
+    alien.blitme()
     pygame.display.flip()
     screen.fill(ai_settings.bg_color)
