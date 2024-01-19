@@ -18,8 +18,6 @@ def run_game():
         fn.check(ship, ai_settings, bullets, screen)
         ship.update()
         bullets.update()
-
-
         fn.update_screen(ship, ai_settings,bullets, screen)
 
 
