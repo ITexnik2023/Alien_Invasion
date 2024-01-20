@@ -1,6 +1,7 @@
 import pygame
 import sys
 from bullet import Bullet
+from alien import Alien
 
 def check(ship, ai_settings, bullets,screen):
     for event in pygame.event.get():
@@ -53,8 +54,8 @@ def check_keyup_events(ship, event):
 def update_screen(ship, ai_settings, bullets, screen,alien):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
-
     ship.blitme()
     alien.blitme()
     pygame.display.flip()
     screen.fill(ai_settings.bg_color)
+
