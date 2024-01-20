@@ -2,6 +2,7 @@ import pygame
 import sys
 from bullet import Bullet
 from alien import Alien
+from ship import Ship
 
 def check(ship, ai_settings, bullets,screen,aliens,aliens_timer):
     for event in pygame.event.get():
@@ -66,4 +67,28 @@ def update_screen(ship, ai_settings, bullets, screen,aliens):
     ship.blitme()
     pygame.display.flip()
     screen.fill(ai_settings.bg_color)
+
+def collision_tracking(aliens, ship,ai_settings):
+    for alien in aliens:
+        if ship.rect.colliderect(alien.rect):
+            ai_settings.gameplay = False
+
+
+def gameplay_false(screen,lose_label,restart_label,restart_label_rect,ai_settings,ship,aliens):
+    for event in pygame.event.get():
+        #обработчик нажатия крестика для выхода из игры
+        if event.type == pygame.QUIT:
+            sys.exit()
+    mouse = pygame.mouse.get_pos()
+    screen.fill((176, 181, 181))
+    screen.blit(lose_label, (425,200))
+    screen.blit(restart_label,restart_label_rect)
+    if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[1]:
+        ai_settings.gameplay = True
+        ship.rect.y = ship.screen_rect.centery
+        ship.rect.centerx = ship.screen_rect.centerx
+        aliens.remove()
+    pygame.display.flip()
+
+
 
