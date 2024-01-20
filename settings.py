@@ -1,3 +1,5 @@
+import pygame
+
 class Settings:
     def __init__(self):
         self.ship_speed_factor = 0.5
@@ -11,5 +13,7 @@ class Settings:
         self.bullet_color = 60,60,60
         self.bullet_allowed = 3
         #настройка пришельцев
-        self.alien_speed = 0.1
+        self.alien_speed = 0.05
+        self.aliens_timer = 1000
+
 

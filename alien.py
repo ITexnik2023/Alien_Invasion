@@ -1,8 +1,8 @@
 import pygame
-from pygame.sprite import Group
+from pygame.sprite import Sprite
 import random
 
-class Alien:
+class Alien(Sprite):
     def __init__(self,screen,ai_settings):
         super(Alien,self).__init__()
         self.coordinate_x = random.randint(0,ai_settings.screen_width - 100)
@@ -23,5 +23,5 @@ class Alien:
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def blitme(self):
+    def blitmes(self):
         self.screen.blit(self.image, self.rect)

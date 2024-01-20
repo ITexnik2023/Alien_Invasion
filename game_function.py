@@ -3,7 +3,7 @@ import sys
 from bullet import Bullet
 from alien import Alien
 
-def check(ship, ai_settings, bullets,screen):
+def check(ship, ai_settings, bullets,screen,aliens,aliens_timer):
     for event in pygame.event.get():
         #обработчик нажатия крестика для выхода из игры
         if event.type == pygame.QUIT:
@@ -12,9 +12,19 @@ def check(ship, ai_settings, bullets,screen):
             check_keydown_events(ship, event,ai_settings,screen,bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(ship, event)
-
+        if event.type == aliens_timer:
+            call_aliens(ai_settings,screen,aliens)
         #обработчик нажатия стрелки
 
+
+def update_alien(aliens,ai_settings):
+    aliens.update()
+    for alien in aliens.copy():
+        if alien.rect.top >= ai_settings.screen_height:
+            aliens.remove(alien)
+def call_aliens(ai_settings,screen,aliens):
+    new_alien = Alien(screen, ai_settings)
+    aliens.add(new_alien)
 def check_keydown_events(ship, event,ai_settings,screen,bullets):
         if event.key == pygame.K_RIGHT:
             ship.moving_right = True
@@ -26,9 +36,6 @@ def check_keydown_events(ship, event,ai_settings,screen,bullets):
             ship.moving_down = True
         if event.key == pygame.K_SPACE:
             fire_bullet(bullets,ai_settings,ship,screen)
-
-
-
 
 def fire_bullet(bullets,ai_settings,ship,screen):
     if len(bullets) <= ai_settings.bullet_allowed:
@@ -51,11 +58,12 @@ def check_keyup_events(ship, event):
 
 
 
-def update_screen(ship, ai_settings, bullets, screen,alien):
+def update_screen(ship, ai_settings, bullets, screen,aliens):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
+    for alien in aliens.sprites():
+        alien.blitmes()
     ship.blitme()
-    alien.blitme()
     pygame.display.flip()
     screen.fill(ai_settings.bg_color)
 
