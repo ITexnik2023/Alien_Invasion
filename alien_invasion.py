@@ -23,16 +23,16 @@ def run_game():
 
 
     while True:
-        fn.collision_tracking(aliens, ship, ai_settings)
-        ship.update()
+        if ai_settings.gameplay:
+            fn.collision_tracking(aliens, ship, ai_settings)
+            ship.update()
+            fn.update_alien(aliens,ai_settings)
+            fn.update_screen(ship, ai_settings, bullets, screen, aliens, fon, play_button)
+            fn.check(ship, ai_settings, bullets, screen, aliens, aliens_timer)
+            fn.update_bullets(bullets,aliens)
 
-        fn.check(ship, ai_settings, bullets, screen,aliens,aliens_timer)
-
-        fn.update_alien(aliens,ai_settings)
-
-        fn.update_bullets(bullets,aliens)
-        fn.update_screen(ship, ai_settings, bullets, screen, aliens, fon, play_button)
-
+        else:
+            fn.gameplay_false(play_button,ai_settings)
 
 
 

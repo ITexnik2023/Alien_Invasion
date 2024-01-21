@@ -2,7 +2,7 @@ import pygame
 
 class Settings:
     def __init__(self):
-        self.gameplay = False
+        self.gameplay = True
         self.ship_speed_factor = 0.5
         self.screen_width = 1200
         self.screen_height = 800

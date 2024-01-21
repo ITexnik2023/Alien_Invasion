@@ -69,8 +69,7 @@ def update_screen(ship, ai_settings, bullets, screen,aliens,fon, play_button):
         alien.blitmes()
 
     ship.blitme()
-    if not ai_settings.gameplay:
-        play_button.draw_button()
+
     pygame.display.flip()
 
     screen.fill(ai_settings.bg_color)
@@ -78,8 +77,20 @@ def update_screen(ship, ai_settings, bullets, screen,aliens,fon, play_button):
 def collision_tracking(aliens, ship,ai_settings):
     if pygame.sprite.spritecollideany(ship,aliens):
         ai_settings.gameplay = False
-        print("you lose")
 
 
+
+def gameplay_false(play_button,ai_settings):
+    play_button.draw_button()
+    for event in pygame.event.get():
+        #обработчик нажатия крестика для выхода из игры
+        if event.type == pygame.QUIT:
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x,mouse_y = pygame.mouse.get_pos()
+            if play_button.rect.collidepoint(mouse_x,mouse_y):
+                ai_settings.gameplay = True
+
+    pygame.display.flip()
 
 
