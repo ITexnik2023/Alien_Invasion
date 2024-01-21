@@ -47,7 +47,7 @@ def update_bullets(bullets,aliens):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    collision_bullet = pygame.sprite.groupcollide(bullets,aliens,True,True)
+    pygame.sprite.groupcollide(bullets,aliens,True,True)
 def check_keyup_events(ship, event):
         if event.key == pygame.K_LEFT:
             ship.moving_left = False
@@ -60,7 +60,8 @@ def check_keyup_events(ship, event):
 
 
 
-def update_screen(ship, ai_settings, bullets, screen,aliens,fon):
+def update_screen(ship, ai_settings, bullets, screen,aliens,fon, play_button):
+
     fon.blitme()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
@@ -68,34 +69,17 @@ def update_screen(ship, ai_settings, bullets, screen,aliens,fon):
         alien.blitmes()
 
     ship.blitme()
-
+    if not ai_settings.gameplay:
+        play_button.draw_button()
     pygame.display.flip()
 
     screen.fill(ai_settings.bg_color)
 
 def collision_tracking(aliens, ship,ai_settings):
-    for alien in aliens:
-        if ship.rect.colliderect(alien.rect):
-            ai_settings.gameplay = False
+    if pygame.sprite.spritecollideany(ship,aliens):
+        ai_settings.gameplay = False
+        print("you lose")
 
-
-#def gameplay_false(screen,lose_label,restart_label,restart_label_rect,ai_settings,ship):
-
-#    mouse = pygame.mouse.get_pos()
- #   for event in pygame.event.get():
-  #      #обработчик нажатия крестика для выхода из игры
-   #     if event.type == pygame.QUIT:
-    #        sys.exit()
-#        if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
- #           ai_settings.gameplay = True
-  #          ship.rect.y = ship.screen_rect.centery
-   #         ship.rect.centerx = ship.screen_rect.centerx
- #   screen.fill((176, 181, 181))
-  #  screen.blit(lose_label, (425,200))
-   # screen.blit(restart_label,restart_label_rect)
-
-
-   # pygame.display.flip()
 
 
 
