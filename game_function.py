@@ -2,7 +2,7 @@ import pygame
 import sys
 from bullet import Bullet
 from alien import Alien
-from ship import Ship
+
 
 def check(ship, ai_settings, bullets,screen,aliens,aliens_timer):
     for event in pygame.event.get():
@@ -42,11 +42,12 @@ def fire_bullet(bullets,ai_settings,ship,screen):
     if len(bullets) <= ai_settings.bullet_allowed:
         new_bullet = Bullet(ai_settings, ship, screen)
         bullets.add(new_bullet)
-def update_bullets(bullets):
+def update_bullets(bullets,aliens):
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    collision_bullet = pygame.sprite.groupcollide(bullets,aliens,True,True)
 def check_keyup_events(ship, event):
         if event.key == pygame.K_LEFT:
             ship.moving_left = False
@@ -59,13 +60,17 @@ def check_keyup_events(ship, event):
 
 
 
-def update_screen(ship, ai_settings, bullets, screen,aliens):
+def update_screen(ship, ai_settings, bullets, screen,aliens,fon):
+    fon.blitme()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     for alien in aliens.sprites():
         alien.blitmes()
+
     ship.blitme()
+
     pygame.display.flip()
+
     screen.fill(ai_settings.bg_color)
 
 def collision_tracking(aliens, ship,ai_settings):
@@ -74,21 +79,23 @@ def collision_tracking(aliens, ship,ai_settings):
             ai_settings.gameplay = False
 
 
-def gameplay_false(screen,lose_label,restart_label,restart_label_rect,ai_settings,ship,aliens):
-    for event in pygame.event.get():
-        #обработчик нажатия крестика для выхода из игры
-        if event.type == pygame.QUIT:
-            sys.exit()
-    mouse = pygame.mouse.get_pos()
-    screen.fill((176, 181, 181))
-    screen.blit(lose_label, (425,200))
-    screen.blit(restart_label,restart_label_rect)
-    if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[1]:
-        ai_settings.gameplay = True
-        ship.rect.y = ship.screen_rect.centery
-        ship.rect.centerx = ship.screen_rect.centerx
-        aliens.remove()
-    pygame.display.flip()
+#def gameplay_false(screen,lose_label,restart_label,restart_label_rect,ai_settings,ship):
+
+#    mouse = pygame.mouse.get_pos()
+ #   for event in pygame.event.get():
+  #      #обработчик нажатия крестика для выхода из игры
+   #     if event.type == pygame.QUIT:
+    #        sys.exit()
+#        if restart_label_rect.collidepoint(mouse) and pygame.mouse.get_pressed()[0]:
+ #           ai_settings.gameplay = True
+  #          ship.rect.y = ship.screen_rect.centery
+   #         ship.rect.centerx = ship.screen_rect.centerx
+ #   screen.fill((176, 181, 181))
+  #  screen.blit(lose_label, (425,200))
+   # screen.blit(restart_label,restart_label_rect)
+
+
+   # pygame.display.flip()
 
 
 
